@@ -247,8 +247,16 @@ a:hover i[class^="ri-"] {
 
 /* Staggered Entrance for Lists/Grids */
 .stagger-item {
-    opacity: 0;
-    animation: staggerIn var(--transition-normal) ease-out forwards;
+    will-change: transform, opacity;
+    animation: staggerIn 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .stagger-item {
+        opacity: 1;
+        transform: none;
+        animation: none;
+    }
 }
 
 @keyframes staggerIn {

@@ -1,142 +1,106 @@
 /**
- * Global App Logic
+ * EventFlow - Global Application Logic
  */
 
 document.addEventListener('DOMContentLoaded', () => {
     initTheme();
-    initMobileNav();
-    checkAuth();
-    initAuthHeader();
-
-    // Global Logout Listener
-    document.querySelectorAll('[href*="logout"], .logout-btn').forEach(el => {
-        el.addEventListener('click', (e) => {
-            e.preventDefault();
-            logoutUser();
-        });
-    });
+    updateNavAuth();
+    initThemeToggle();
 });
-
-/**
- * Handle Auth Header (Login/Join vs Profile)
- */
-function initAuthHeader() {
-    const navAuth = document.getElementById('nav-auth');
-    if (!navAuth) return;
-
-    const token = localStorage.getItem('token');
-    const user = JSON.parse(localStorage.getItem('user') || '{}');
-
-    if (token) {
-        // Logged in: Show Avatar
-        const avatarUrl = user.avatar || `https://ui-avatars.com/api/?name=${user.email || 'User'}&background=random`;
-        navAuth.innerHTML = `
-            <a href="dashboard.html" class="profile-avatar" title="Account Dashboard">
-                <img src="${avatarUrl}" alt="Profile">
-            </a>
-        `;
-    } else {
-        // Not logged in: Show Login/Join (This is default in HTML if JS doesn't run, but good to reset if needed)
-        navAuth.innerHTML = `
-            <a href="login.html" class="nav-link">Login</a>
-            <a href="register.html" class="btn btn-primary">Join Now</a>
-        `;
-    }
-}
-
-/**
- * Authentication & Session Management
- */
-function checkAuth() {
-    const publicPages = ['login.html', 'register.html', 'admin-login.html'];
-    let currentPage = window.location.pathname.split('/').pop();
-    if (!currentPage) currentPage = 'index.html';
-
-    const token = localStorage.getItem('token');
-    const loginTime = localStorage.getItem('loginTime');
-    const isAdminPage = currentPage.startsWith('admin');
-
-    // 1. Check if session has expired (24 hours = 86,400,000 ms)
-    if (loginTime) {
-        const currentTime = new Date().getTime();
-        const twentyFourHours = 24 * 60 * 60 * 1000;
-
-        if (currentTime - parseInt(loginTime) > twentyFourHours) {
-            logoutUser('Your session has expired. Please log in again.');
-            return;
-        }
-    }
-
-    // 2. Protect private pages
-    if (!publicPages.includes(currentPage)) {
-        if (!token) {
-            window.location.href = 'login.html';
-        }
-    }
-}
-
-function logoutUser(message) {
-    localStorage.removeItem('token');
-    localStorage.removeItem('loginTime');
-    localStorage.removeItem('user');
-    if (message) {
-        // We use a query param or alert because toasts will be lost on redirect
-        alert(message);
-    }
-    window.location.href = 'login.html';
-}
-
-function saveSession(token, user) {
-    localStorage.setItem('token', token);
-    localStorage.setItem('user', JSON.stringify(user));
-    localStorage.setItem('loginTime', new Date().getTime().toString());
-}
 
 /**
  * Theme Management
  */
 function initTheme() {
-    const savedTheme = localStorage.getItem('theme') || 'light';
+    const savedTheme = localStorage.getItem('theme') || 'dark';
     document.documentElement.setAttribute('data-theme', savedTheme);
-    updateThemeIcon(savedTheme);
+}
 
-    const themeToggle = document.querySelector('#theme-toggle');
-    if (themeToggle) {
-        themeToggle.addEventListener('click', () => {
+function initThemeToggle() {
+    const toggleBtn = document.getElementById('theme-toggle');
+    if (toggleBtn) {
+        toggleBtn.addEventListener('click', () => {
             const currentTheme = document.documentElement.getAttribute('data-theme');
-            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
 
             document.documentElement.setAttribute('data-theme', newTheme);
             localStorage.setItem('theme', newTheme);
-            updateThemeIcon(newTheme);
 
-            // Notification for theme change (subtle)
-            showToast(`Switched to ${newTheme} mode`, 'info');
+            // Update icon
+            const icon = toggleBtn.querySelector('i');
+            if (icon) {
+                icon.className = newTheme === 'dark' ? 'ri-moon-line' : 'ri-sun-line';
+            }
         });
-    }
-}
-
-function updateThemeIcon(theme) {
-    const icon = document.querySelector('#theme-toggle i');
-    if (icon) {
-        icon.className = theme === 'light' ? 'ri-moon-line' : 'ri-sun-line';
     }
 }
 
 /**
- * Mobile Navigation
+ * Authentication Mock
  */
-function initMobileNav() {
-    const menuBtn = document.querySelector('#mobile-menu-btn');
-    const nav = document.querySelector('#main-nav');
+function saveSession(token, user) {
+    localStorage.setItem('token', token);
+    localStorage.setItem('user', JSON.stringify(user));
+    updateNavAuth();
+}
 
-    if (menuBtn && nav) {
-        menuBtn.addEventListener('click', () => {
-            nav.classList.toggle('active');
-            menuBtn.classList.toggle('active');
-        });
+function getSession() {
+    const token = localStorage.getItem('token');
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
+    return token ? { token, user } : null;
+}
+
+function clearSession() {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    window.location.href = 'login.html';
+}
+
+/**
+ * Global Navigation Auth State
+ */
+function updateNavAuth() {
+    const navAuth = document.getElementById('nav-auth');
+    if (!navAuth) return;
+
+    const session = getSession();
+    if (session) {
+        navAuth.innerHTML = `
+            <div style="display: flex; align-items: center; gap: 1rem;">
+                <a href="dashboard.html" class="nav-link">My Dashboard</a>
+                <div class="profile-avatar" onclick="window.location.href='profile.html'">
+                    <img src="https://ui-avatars.com/api/?name=${encodeURIComponent(session.user.name || session.user.email)}&background=random" alt="User">
+                </div>
+            </div>
+        `;
     }
 }
+
+/**
+ * Modal System
+ */
+function openModal(modalId) {
+    const modal = document.getElementById(modalId);
+    if (modal) {
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+}
+
+function closeModal(modalId) {
+    const modal = document.getElementById(modalId);
+    if (modal) {
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+}
+
+// Close modal on outside click
+document.addEventListener('click', (e) => {
+    if (e.target.classList.contains('modal-overlay')) {
+        closeModal(e.target.id);
+    }
+});
 
 /**
  * Toast Notifications (Top-Right)
@@ -154,22 +118,22 @@ function showToast(message, type = 'info', duration = 3000) {
     toast.className = `toast ${type}`;
 
     const iconMap = {
-        success: 'ri-checkbox-circle-fill',
-        error: 'ri-error-warning-fill',
-        info: 'ri-information-fill',
-        warning: 'ri-alert-fill'
+        success: 'ri-checkbox-circle-line',
+        error: 'ri-error-warning-line',
+        info: 'ri-information-line',
+        warning: 'ri-alert-line'
     };
 
     toast.innerHTML = `
-        <i class="${iconMap[type] || 'ri-information-fill'}" style="color: var(--${type})"></i>
+        <i class="${iconMap[type]}"></i>
         <span>${message}</span>
     `;
 
     container.appendChild(toast);
 
     setTimeout(() => {
-        toast.style.animation = 'slideOutRight 0.3s ease-in forwards';
-        setTimeout(() => toast.remove(), 300);
+        toast.style.animation = 'slideOutRight 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards';
+        setTimeout(() => toast.remove(), 400);
     }, duration);
 }
 
@@ -191,20 +155,14 @@ function addNotification(title, message) {
 }
 
 /**
- * Modal System
+ * Global Logout Handling
  */
-function openModal(modalId) {
-    const modal = document.getElementById(modalId);
-    if (modal) {
-        modal.classList.add('active');
-        document.body.style.overflow = 'hidden';
+document.addEventListener('click', (e) => {
+    const logoutBtn = e.target.closest('.logout-btn');
+    if (logoutBtn) {
+        e.preventDefault();
+        if (confirm('Are you sure you want to logout?')) {
+            clearSession();
+        }
     }
-}
-
-function closeModal(modalId) {
-    const modal = document.getElementById(modalId);
-    if (modal) {
-        modal.classList.remove('active');
-        document.body.style.overflow = '';
-    }
-}
+});
