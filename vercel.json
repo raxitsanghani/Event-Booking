@@ -1,0 +1,29 @@
+{
+    "version": 2,
+    "builds": [
+        {
+            "src": "event-flow/src/server.js",
+            "use": "@vercel/node",
+            "config": {
+                "includeFiles": [
+                    "frontend/**",
+                    "event-flow/swagger.yaml"
+                ]
+            }
+        }
+    ],
+    "routes": [
+        {
+            "src": "/api/(.*)",
+            "dest": "event-flow/src/server.js"
+        },
+        {
+            "src": "/api-docs/(.*)",
+            "dest": "event-flow/src/server.js"
+        },
+        {
+            "src": "/(.*)",
+            "dest": "event-flow/src/server.js"
+        }
+    ]
+}
