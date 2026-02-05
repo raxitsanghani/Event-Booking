@@ -2,7 +2,7 @@
  * API Service for Backend Communication
  */
 
-const API_BASE_URL = 'http://localhost:5000/api'; // Update with your backend URL
+const API_BASE_URL = '/api'; // Using relative path for unified serving
 
 const apiFetch = async (endpoint, options = {}) => {
     const defaultOptions = {
