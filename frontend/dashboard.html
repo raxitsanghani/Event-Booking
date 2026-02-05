@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Dashboard | EventFlow</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css">
+    <style>
+        .dashboard-layout {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 2rem;
+            margin-top: 8rem;
+        }
+
+        .dashboard-nav {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .dash-link {
+            padding: 1rem 1.5rem;
+            border-radius: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            font-weight: 500;
+            color: var(--text-mid);
+            transition: var(--transition-fast);
+        }
+
+        .dash-link:hover,
+        .dash-link.active {
+            background: var(--primary-light);
+            color: var(--primary);
+        }
+
+        .dash-link.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .booking-card {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .booking-img {
+            width: 120px;
+            height: 120px;
+            border-radius: 1rem;
+            object-fit: cover;
+        }
+
+        .booking-info {
+            flex-grow: 1;
+        }
+
+        .booking-info h4 {
+            margin-bottom: 0.5rem;
+        }
+
+        .booking-info p {
+            font-size: 0.875rem;
+            color: var(--text-low);
+        }
+
+        @media (max-width: 992px) {
+            .dashboard-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .dashboard-nav {
+                flex-direction: row;
+                overflow-x: auto;
+                padding-bottom: 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body class="fade-in">
+
+    <header>
+        <div class="container nav-container">
+            <a href="index.html" class="logo">
+                <i class="ri-flashlight-fill" style="color: var(--primary)"></i>
+                <span>EventFlow</span>
+            </a>
+            <nav class="nav-links">
+                <a href="events.html" class="nav-link">Explore Events</a>
+                <a href="dashboard.html" class="nav-link active" style="color: var(--primary)">My Bookings</a>
+                <button id="theme-toggle" class="btn btn-outline btn-icon">
+                    <i class="ri-moon-line"></i>
+                </button>
+                <div
+                    style="width: 40px; height: 40px; border-radius: 50%; background: var(--border); overflow: hidden; margin-left:1rem;">
+                    <img src="https://ui-avatars.com/api/?name=Alex+Johnson&background=random" alt="Avatar">
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container dashboard-layout">
+        <aside>
+            <div class="dashboard-nav">
+                <a href="dashboard.html" class="dash-link active"><i class="ri-ticket-2-line"></i> My Bookings</a>
+                <a href="profile.html" class="dash-link"><i class="ri-user-settings-line"></i> Profile Settings</a>
+                <a href="#" class="dash-link"><i class="ri-notification-3-line"></i> Notifications</a>
+                <a href="#" class="dash-link" style="color: var(--error)"><i class="ri-logout-box-r-line"></i>
+                    Logout</a>
+            </div>
+
+            <div class="card" style="margin-top: 2rem; padding: 1.5rem;">
+                <h4>Need Help?</h4>
+                <p style="font-size: 0.875rem; margin: 1rem 0;">Our support team is available 24/7 for any booking
+                    issues.</p>
+                <button class="btn btn-outline" style="width: 100%;">Contact Support</button>
+            </div>
+        </aside>
+
+        <section>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                <h1>My Bookings</h1>
+                <div style="display: flex; gap: 0.5rem;">
+                    <button class="btn btn-sm btn-outline active">All</button>
+                    <button class="btn btn-sm btn-outline">Upcoming</button>
+                    <button class="btn btn-sm btn-outline">Past</button>
+                </div>
+            </div>
+
+            <div class="booking-list">
+                <!-- Booking Card 1 -->
+                <div class="card booking-card">
+                    <img src="https://images.unsplash.com/photo-1540575861501-7ad05823c983?auto=format&fit=crop&w=300&q=80"
+                        alt="Tech Summit" class="booking-img">
+                    <div class="booking-info">
+                        <span class="status-badge status-confirmed">Confirmed</span>
+                        <h4 style="margin-top: 0.5rem;">Global Tech Summit 2026</h4>
+                        <p><i class="ri-map-pin-line"></i> Moscone Center, SF</p>
+                        <p><i class="ri-calendar-line"></i> Oct 12, 2026 • 09:00 AM</p>
+                    </div>
+                    <div style="text-align: right;">
+                        <button class="btn btn-outline btn-sm">View Ticket</button>
+                        <button class="btn btn-icon btn-sm" style="color: var(--error); margin-left: 0.5rem;"><i
+                                class="ri-delete-bin-line"></i></button>
+                    </div>
+                </div>
+
+                <!-- Booking Card 2 -->
+                <div class="card booking-card">
+                    <img src="https://images.unsplash.com/photo-1459749411177-042180ce673b?auto=format&fit=crop&w=300&q=80"
+                        alt="Music Fest" class="booking-img">
+                    <div class="booking-info">
+                        <span class="status-badge status-pending">Pending</span>
+                        <h4 style="margin-top: 0.5rem;">Neon Beats Festival</h4>
+                        <p><i class="ri-map-pin-line"></i> Miami Waterfront</p>
+                        <p><i class="ri-calendar-line"></i> Nov 05, 2026 • 07:30 PM</p>
+                    </div>
+                    <div style="text-align: right;">
+                        <button class="btn btn-primary btn-sm">Complete Payment</button>
+                        <button class="btn btn-icon btn-sm" style="color: var(--error); margin-left: 0.5rem;"><i
+                                class="ri-delete-bin-line"></i></button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="js/app.js"></script>
+</body>
+
+</html>

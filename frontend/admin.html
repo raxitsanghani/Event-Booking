@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | EventFlow</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/admin.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css">
+</head>
+
+<body class="fade-in">
+
+    <div class="admin-container">
+        <!-- Sidebar -->
+        <aside class="admin-sidebar">
+            <div class="admin-logo">
+                <i class="ri-flashlight-fill" style="color: var(--primary)"></i>
+                <span>EventFlow Admin</span>
+            </div>
+
+            <nav class="sidebar-nav">
+                <a href="admin.html" class="sidebar-link active">
+                    <i class="ri-dashboard-3-line"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="admin-events.html" class="sidebar-link">
+                    <i class="ri-calendar-event-line"></i>
+                    <span>Events Management</span>
+                </a>
+                <a href="admin-bookings.html" class="sidebar-link">
+                    <i class="ri-ticket-2-line"></i>
+                    <span>Bookings</span>
+                </a>
+                <a href="admin-users.html" class="sidebar-link">
+                    <i class="ri-group-line"></i>
+                    <span>Users</span>
+                </a>
+                <a href="admin-settings.html" class="sidebar-link">
+                    <i class="ri-settings-4-line"></i>
+                    <span>Settings</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <button id="theme-toggle" class="btn btn-outline btn-icon"
+                    style="width: 100%; justify-content: flex-start; margin-bottom: 1rem;">
+                    <i class="ri-moon-line"></i>
+                    <span style="margin-left: 0.5rem">Toggle Theme</span>
+                </button>
+                <a href="index.html" class="sidebar-link" style="color: var(--error)">
+                    <i class="ri-logout-box-r-line"></i>
+                    <span>Logout</span>
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="admin-main">
+            <header class="admin-header">
+                <div>
+                    <h1>Dashboard Overview</h1>
+                    <p>Welcome back, Admin. Here's what's happening today.</p>
+                </div>
+                <div style="display: flex; gap: 1rem;">
+                    <button class="btn btn-outline"><i class="ri-download-2-line"></i> Export Report</button>
+                    <button class="btn btn-primary" onclick="openModal('add-event-modal')"><i class="ri-add-line"></i>
+                        New Event</button>
+                </div>
+            </header>
+
+            <!-- Stats Grid -->
+            <section class="stats-grid">
+                <div class="card stat-card">
+                    <div class="stat-icon" style="background: rgba(79, 70, 229, 0.1); color: var(--primary)">
+                        <i class="ri-calendar-check-line"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h4>Total Events</h4>
+                        <p>128</p>
+                    </div>
+                </div>
+                <div class="card stat-card">
+                    <div class="stat-icon" style="background: rgba(16, 185, 129, 0.1); color: var(--secondary)">
+                        <i class="ri-group-line"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h4>Total Users</h4>
+                        <p>1,240</p>
+                    </div>
+                </div>
+                <div class="card stat-card">
+                    <div class="stat-icon" style="background: rgba(245, 158, 11, 0.1); color: #f59e0b">
+                        <i class="ri-ticket-2-line"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h4>Total Bookings</h4>
+                        <p>856</p>
+                    </div>
+                </div>
+                <div class="card stat-card">
+                    <div class="stat-icon" style="background: rgba(16, 185, 129, 0.1); color: #10B981">
+                        <i class="ri-money-dollar-circle-line"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h4>Revenue</h4>
+                        <p>$42.5K</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Recent Bookings Table -->
+            <section>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                    <h3>Recent Bookings</h3>
+                    <a href="admin-bookings.html" class="nav-link" style="font-size: 0.875rem;">View All Bookings</a>
+                </div>
+                <div class="admin-table-container">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>Booking ID</th>
+                                <th>User</th>
+                                <th>Event</th>
+                                <th>Date</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>#BK-8801</td>
+                                <td>
+                                    <div style="display: flex; align-items: center; gap: 0.75rem;">
+                                        <div
+                                            style="width: 32px; height: 32px; border-radius: 50%; background: var(--border); overflow: hidden;">
+                                            <img src="https://ui-avatars.com/api/?name=Alex+Johnson&background=random"
+                                                alt="Avatar">
+                                        </div>
+                                        <span>Alex Johnson</span>
+                                    </div>
+                                </td>
+                                <td>Global Tech Summit</td>
+                                <td>Feb 04, 2026</td>
+                                <td><span class="status-badge status-confirmed">Confirmed</span></td>
+                                <td>
+                                    <button class="btn btn-icon btn-outline btn-sm"><i
+                                            class="ri-more-2-fill"></i></button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>#BK-8802</td>
+                                <td>
+                                    <div style="display: flex; align-items: center; gap: 0.75rem;">
+                                        <div
+                                            style="width: 32px; height: 32px; border-radius: 50%; background: var(--border); overflow: hidden;">
+                                            <img src="https://ui-avatars.com/api/?name=Sarah+Smith&background=random"
+                                                alt="Avatar">
+                                        </div>
+                                        <span>Sarah Smith</span>
+                                    </div>
+                                </td>
+                                <td>Neon Beats Festival</td>
+                                <td>Feb 04, 2026</td>
+                                <td><span class="status-badge status-pending">Pending</span></td>
+                                <td>
+                                    <button class="btn btn-icon btn-outline btn-sm"><i
+                                            class="ri-more-2-fill"></i></button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>#BK-8803</td>
+                                <td>
+                                    <div style="display: flex; align-items: center; gap: 0.75rem;">
+                                        <div
+                                            style="width: 32px; height: 32px; border-radius: 50%; background: var(--border); overflow: hidden;">
+                                            <img src="https://ui-avatars.com/api/?name=Mike+Ross&background=random"
+                                                alt="Avatar">
+                                        </div>
+                                        <span>Mike Ross</span>
+                                    </div>
+                                </td>
+                                <td>Creative Design Workshop</td>
+                                <td>Feb 03, 2026</td>
+                                <td><span class="status-badge status-cancelled">Cancelled</span></td>
+                                <td>
+                                    <button class="btn btn-icon btn-outline btn-sm"><i
+                                            class="ri-more-2-fill"></i></button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Add Event Modal -->
+    <div class="modal-overlay" id="add-event-modal">
+        <div class="modal-content" style="max-width: 600px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                <h3>Create New Event</h3>
+                <button class="btn btn-icon btn-outline" onclick="closeModal('add-event-modal')"><i
+                        class="ri-close-line"></i></button>
+            </div>
+            <form id="add-event-form">
+                <div class="form-group">
+                    <label class="form-label">Event Title</label>
+                    <input type="text" class="form-input" placeholder="Enter event name" required>
+                </div>
+                <div class="grid-forms" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                    <div class="form-group">
+                        <label class="form-label">Date</label>
+                        <input type="date" class="form-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Time</label>
+                        <input type="time" class="form-input" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Location</label>
+                    <input type="text" class="form-input" placeholder="Physical or Virtual Address" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Price ($)</label>
+                    <input type="number" class="form-input" placeholder="0.00" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Description</label>
+                    <textarea class="form-input" style="height: 100px; resize: none;"></textarea>
+                </div>
+                <div style="display: flex; gap: 1rem; margin-top: 2rem;">
+                    <button type="button" class="btn btn-outline" style="flex: 1;"
+                        onclick="closeModal('add-event-modal')">Cancel</button>
+                    <button type="submit" class="btn btn-primary" style="flex: 2;">Create Event <i
+                            class="ri-check-line"></i></button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/app.js"></script>
+    <script>
+        // Form Handling
+        document.getElementById('add-event-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            showToast('Event created successfully!', 'success');
+            closeModal('add-event-modal');
+        });
+    </script>
+</body>
+
+</html>

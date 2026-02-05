@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Events | EventFlow Admin</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/admin.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css">
+</head>
+
+<body class="fade-in">
+
+    <div class="admin-container">
+        <!-- Sidebar -->
+        <aside class="admin-sidebar">
+            <div class="admin-logo">
+                <i class="ri-flashlight-fill" style="color: var(--primary)"></i>
+                <span>EventFlow Admin</span>
+            </div>
+
+            <nav class="sidebar-nav">
+                <a href="admin.html" class="sidebar-link">
+                    <i class="ri-dashboard-3-line"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="admin-events.html" class="sidebar-link active">
+                    <i class="ri-calendar-event-line"></i>
+                    <span>Events Management</span>
+                </a>
+                <a href="admin-bookings.html" class="sidebar-link">
+                    <i class="ri-ticket-2-line"></i>
+                    <span>Bookings</span>
+                </a>
+                <a href="admin-users.html" class="sidebar-link">
+                    <i class="ri-group-line"></i>
+                    <span>Users</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <button id="theme-toggle" class="btn btn-outline btn-icon"
+                    style="width: 100%; justify-content: flex-start; margin-bottom: 1rem;">
+                    <i class="ri-moon-line"></i>
+                    <span style="margin-left: 0.5rem">Toggle Theme</span>
+                </button>
+                <a href="index.html" class="sidebar-link" style="color: var(--error)">
+                    <i class="ri-logout-box-r-line"></i>
+                    <span>Logout</span>
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="admin-main">
+            <header class="admin-header">
+                <div>
+                    <h1>Events Management</h1>
+                    <p>Add, edit, or remove events from the platform.</p>
+                </div>
+                <button class="btn btn-primary" onclick="openModal('add-event-modal')"><i class="ri-add-line"></i>
+                    Create New Event</button>
+            </header>
+
+            <div class="card" style="margin-bottom: 2rem; padding: 1.5rem;">
+                <div style="display: flex; gap: 1rem;">
+                    <div class="search-box" style="flex-grow: 1; position: relative;">
+                        <i class="ri-search-line"
+                            style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--text-low);"></i>
+                        <input type="text" class="form-input" style="padding-left: 2.5rem;"
+                            placeholder="Search events...">
+                    </div>
+                    <select class="form-input" style="width: auto;">
+                        <option>Status: All</option>
+                        <option>Active</option>
+                        <option>Draft</option>
+                        <option>Completed</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="admin-table-container">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>Image</th>
+                            <th>Event Name</th>
+                            <th>Date / Time</th>
+                            <th>Venue</th>
+                            <th>Tickets Sold</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><img src="https://images.unsplash.com/photo-1540575861501-7ad05823c983?auto=format&fit=crop&w=50&q=80"
+                                    style="width: 40px; height: 40px; border-radius: 0.5rem; object-fit: cover;" alt="">
+                            </td>
+                            <td><span style="font-weight: 600; color: var(--text-high);">Global Tech Summit 2026</span>
+                            </td>
+                            <td>Oct 12, 2026<br><span style="font-size: 0.75rem;">09:00 AM</span></td>
+                            <td>Moscone Center, SF</td>
+                            <td>
+                                <div
+                                    style="width: 100%; height: 8px; background: var(--bg-main); border-radius: 4px; overflow: hidden; margin-bottom: 0.25rem;">
+                                    <div style="width: 75%; height: 100%; background: var(--primary);"></div>
+                                </div>
+                                <span style="font-size: 0.75rem;">150/200 sold</span>
+                            </td>
+                            <td><span class="status-badge status-confirmed">Active</span></td>
+                            <td>
+                                <div style="display: flex; gap: 0.5rem;">
+                                    <button class="btn btn-icon btn-outline btn-sm" title="Edit"><i
+                                            class="ri-edit-line"></i></button>
+                                    <button class="btn btn-icon btn-outline btn-sm" style="color: var(--error);"
+                                        title="Delete"><i class="ri-delete-bin-line"></i></button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><img src="https://images.unsplash.com/photo-1459749411177-042180ce673b?auto=format&fit=crop&w=50&q=80"
+                                    style="width: 40px; height: 40px; border-radius: 0.5rem; object-fit: cover;" alt="">
+                            </td>
+                            <td><span style="font-weight: 600; color: var(--text-high);">Neon Beats Festival</span></td>
+                            <td>Nov 05, 2026<br><span style="font-size: 0.75rem;">07:30 PM</span></td>
+                            <td>Miami Waterfront</td>
+                            <td>
+                                <div
+                                    style="width: 100%; height: 8px; background: var(--bg-main); border-radius: 4px; overflow: hidden; margin-bottom: 0.25rem;">
+                                    <div style="width: 40%; height: 100%; background: var(--primary);"></div>
+                                </div>
+                                <span style="font-size: 0.75rem;">200/500 sold</span>
+                            </td>
+                            <td><span class="status-badge status-confirmed">Active</span></td>
+                            <td>
+                                <div style="display: flex; gap: 0.5rem;">
+                                    <button class="btn btn-icon btn-outline btn-sm" title="Edit"><i
+                                            class="ri-edit-line"></i></button>
+                                    <button class="btn btn-icon btn-outline btn-sm" style="color: var(--error);"
+                                        title="Delete"><i class="ri-delete-bin-line"></i></button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div style="margin-top: 2rem; display: flex; justify-content: space-between; align-items: center;">
+                <p style="font-size: 0.875rem;">Showing 1 - 2 of 24 events</p>
+                <div style="display: flex; gap: 0.5rem;">
+                    <button class="btn btn-sm btn-outline disabled">Previous</button>
+                    <button class="btn btn-sm btn-outline active">1</button>
+                    <button class="btn btn-sm btn-outline">2</button>
+                    <button class="btn btn-sm btn-outline">Next</button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Reusing Add Event Modal -->
+    <div class="modal-overlay" id="add-event-modal">
+        <div class="modal-content" style="max-width: 600px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                <h3>Create New Event</h3>
+                <button class="btn btn-icon btn-outline" onclick="closeModal('add-event-modal')"><i
+                        class="ri-close-line"></i></button>
+            </div>
+            <form id="add-event-form">
+                <div class="form-group">
+                    <label class="form-label">Event Title</label>
+                    <input type="text" class="form-input" placeholder="Enter event name" required>
+                </div>
+                <div class="grid-forms" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                    <div class="form-group">
+                        <label class="form-label">Date</label>
+                        <input type="date" class="form-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Time</label>
+                        <input type="time" class="form-input" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Location</label>
+                    <input type="text" class="form-input" placeholder="Physical or Virtual Address" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Price ($)</label>
+                    <input type="number" class="form-input" placeholder="0.00" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Description</label>
+                    <textarea class="form-input" style="height: 100px; resize: none;"></textarea>
+                </div>
+                <div style="display: flex; gap: 1rem; margin-top: 2rem;">
+                    <button type="button" class="btn btn-outline" style="flex: 1;"
+                        onclick="closeModal('add-event-modal')">Cancel</button>
+                    <button type="submit" class="btn btn-primary" style="flex: 2;">Create Event <i
+                            class="ri-check-line"></i></button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/app.js"></script>
+    <script>
+        document.getElementById('add-event-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            showToast('Event created successfully!', 'success');
+            closeModal('add-event-modal');
+        });
+    </script>
+</body>
+
+</html>

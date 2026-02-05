@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Users | EventFlow Admin</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/admin.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css">
+</head>
+
+<body class="fade-in">
+
+    <div class="admin-container">
+        <!-- Sidebar -->
+        <aside class="admin-sidebar">
+            <div class="admin-logo">
+                <i class="ri-flashlight-fill" style="color: var(--primary)"></i>
+                <span>EventFlow Admin</span>
+            </div>
+
+            <nav class="sidebar-nav">
+                <a href="admin.html" class="sidebar-link">
+                    <i class="ri-dashboard-3-line"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="admin-events.html" class="sidebar-link">
+                    <i class="ri-calendar-event-line"></i>
+                    <span>Events Management</span>
+                </a>
+                <a href="admin-bookings.html" class="sidebar-link">
+                    <i class="ri-ticket-2-line"></i>
+                    <span>Bookings</span>
+                </a>
+                <a href="admin-users.html" class="sidebar-link active">
+                    <i class="ri-group-line"></i>
+                    <span>Users</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <button id="theme-toggle" class="btn btn-outline btn-icon"
+                    style="width: 100%; justify-content: flex-start; margin-bottom: 1rem;">
+                    <i class="ri-moon-line"></i>
+                    <span style="margin-left: 0.5rem">Toggle Theme</span>
+                </button>
+                <a href="index.html" class="sidebar-link" style="color: var(--error)">
+                    <i class="ri-logout-box-r-line"></i>
+                    <span>Logout</span>
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="admin-main">
+            <header class="admin-header">
+                <div>
+                    <h1>User Management</h1>
+                    <p>Review and manage all registered users.</p>
+                </div>
+                <button class="btn btn-outline"><i class="ri-user-add-line"></i> Invite User</button>
+            </header>
+
+            <div class="card" style="margin-bottom: 2rem; padding: 1.5rem;">
+                <div style="display: flex; gap: 1rem;">
+                    <div class="search-box" style="flex-grow: 1; position: relative;">
+                        <i class="ri-search-line"
+                            style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--text-low);"></i>
+                        <input type="text" class="form-input" style="padding-left: 2.5rem;"
+                            placeholder="Search users by name, email...">
+                    </div>
+                </div>
+            </div>
+
+            <div class="admin-table-container">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>User (Email)</th>
+                            <th>Role</th>
+                            <th>Total Bookings</th>
+                            <th>Joined Date</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div style="display: flex; align-items: center; gap: 0.75rem;">
+                                    <div
+                                        style="width: 40px; height: 40px; border-radius: 50%; background: var(--border); overflow: hidden;">
+                                        <img src="https://ui-avatars.com/api/?name=Alex+Johnson&background=random"
+                                            alt="Avatar">
+                                    </div>
+                                    <div>
+                                        <p style="font-weight: 600; color: var(--text-high);">Alex Johnson</p>
+                                        <p style="font-size: 0.75rem;">alex.j@example.com</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td><span class="event-tag"
+                                    style="background: var(--primary-light); color: var(--primary);">User</span></td>
+                            <td>12 Bookings</td>
+                            <td>Oct 12, 2025</td>
+                            <td><span class="status-badge status-confirmed">Active</span></td>
+                            <td>
+                                <div style="display: flex; gap: 0.5rem;">
+                                    <button class="btn btn-icon btn-outline btn-sm"
+                                        onclick="showToast('User blocked', 'warning')"><i
+                                            class="ri-lock-2-line"></i></button>
+                                    <button class="btn btn-icon btn-outline btn-sm" style="color: var(--error);"><i
+                                            class="ri-delete-bin-line"></i></button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div style="display: flex; align-items: center; gap: 0.75rem;">
+                                    <div
+                                        style="width: 40px; height: 40px; border-radius: 50%; background: var(--border); overflow: hidden;">
+                                        <img src="https://ui-avatars.com/api/?name=Sarah+Smith&background=random"
+                                            alt="Avatar">
+                                    </div>
+                                    <div>
+                                        <p style="font-weight: 600; color: var(--text-high);">Sarah Smith</p>
+                                        <p style="font-size: 0.75rem;">sarah.s@example.com</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td><span class="event-tag"
+                                    style="background: var(--primary-light); color: var(--primary);">User</span></td>
+                            <td>5 Bookings</td>
+                            <td>Nov 05, 2025</td>
+                            <td><span class="status-badge status-cancelled">Blocked</span></td>
+                            <td>
+                                <div style="display: flex; gap: 0.5rem;">
+                                    <button class="btn btn-icon btn-outline btn-sm"
+                                        onclick="showToast('User unblocked', 'success')"><i
+                                            class="ri-lock-unlock-line"></i></button>
+                                    <button class="btn btn-icon btn-outline btn-sm" style="color: var(--error);"><i
+                                            class="ri-delete-bin-line"></i></button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+
+</html>

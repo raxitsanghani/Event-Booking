@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Explore Events | EventFlow</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css">
+    <style>
+        .filter-section {
+            padding: 2rem 0;
+            background: var(--bg-surface);
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 4rem;
+        }
+
+        .filter-container {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .search-box {
+            flex-grow: 1;
+            position: relative;
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-low);
+        }
+
+        .search-box .form-input {
+            padding-left: 2.5rem;
+        }
+
+        .filter-chips {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .chip {
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            border: 1px solid var(--border);
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition-fast);
+        }
+
+        .chip:hover,
+        .chip.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .events-header {
+            margin-top: 6rem;
+            margin-bottom: 2rem;
+        }
+    </style>
+</head>
+
+<body class="fade-in">
+
+    <header>
+        <div class="container nav-container">
+            <a href="index.html" class="logo">
+                <i class="ri-flashlight-fill" style="color: var(--primary)"></i>
+                <span>EventFlow</span>
+            </a>
+            <nav class="nav-links">
+                <a href="events.html" class="nav-link active" style="color: var(--primary)">Explore Events</a>
+                <a href="dashboard.html" class="nav-link">My Bookings</a>
+                <a href="profile.html" class="nav-link">Profile</a>
+                <button id="theme-toggle" class="btn btn-outline btn-icon">
+                    <i class="ri-moon-line"></i>
+                </button>
+                <div
+                    style="width: 40px; height: 40px; border-radius: 50%; background: var(--border); overflow: hidden; margin-left:1rem;">
+                    <img src="https://ui-avatars.com/api/?name=User&background=random" alt="Avatar">
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="events-header container">
+            <h1>Explore Events</h1>
+            <p>Find the best events happening around the world.</p>
+        </section>
+
+        <section class="filter-section">
+            <div class="container">
+                <div class="filter-container">
+                    <div class="search-box">
+                        <i class="ri-search-line"></i>
+                        <input type="text" class="form-input" placeholder="Search for events, cities, or categories...">
+                    </div>
+                    <select class="form-input" style="width: auto;">
+                        <option>All Locations</option>
+                        <option>San Francisco</option>
+                        <option>London</option>
+                        <option>Miami</option>
+                    </select>
+                    <select class="form-input" style="width: auto;">
+                        <option>Pick Dates</option>
+                        <option>This Week</option>
+                        <option>Next Month</option>
+                    </select>
+                </div>
+                <div class="filter-chips">
+                    <div class="chip active">All Events</div>
+                    <div class="chip">Technology</div>
+                    <div class="chip">Music</div>
+                    <div class="chip">Business</div>
+                    <div class="chip">Art</div>
+                    <div class="chip">Workshops</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="container" style="padding-bottom: 6rem;">
+            <div class="event-grid" id="events-list">
+                <!-- Skeleton Loading State Example -->
+                <!-- <div class="card skeleton" style="height: 400px; border-radius: 1rem;"></div> -->
+
+                <!-- Static Data for Demo -->
+                <article class="card event-card">
+                    <img src="https://images.unsplash.com/photo-1540575861501-7ad05823c983?auto=format&fit=crop&w=800&q=80"
+                        alt="Tech Conference" class="event-img">
+                    <div class="event-content">
+                        <span class="event-tag">Technology</span>
+                        <h3>Global Tech Summit 2026</h3>
+                        <div class="event-meta">
+                            <span><i class="ri-calendar-line"></i> Oct 12, 2026</span>
+                            <span><i class="ri-map-pin-line"></i> San Francisco</span>
+                        </div>
+                        <div class="event-footer">
+                            <span class="event-price">$299.00</span>
+                            <a href="event-details.html" class="btn btn-primary btn-sm">Get Tickets</a>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="card event-card">
+                    <img src="https://images.unsplash.com/photo-1459749411177-042180ce673b?auto=format&fit=crop&w=800&q=80"
+                        alt="Music Festival" class="event-img">
+                    <div class="event-content">
+                        <span class="event-tag">Music</span>
+                        <h3>Neon Beats Festival</h3>
+                        <div class="event-meta">
+                            <span><i class="ri-calendar-line"></i> Nov 05, 2026</span>
+                            <span><i class="ri-map-pin-line"></i> Miami, FL</span>
+                        </div>
+                        <div class="event-footer">
+                            <span class="event-price">$149.00</span>
+                            <a href="event-details.html" class="btn btn-primary btn-sm">Get Tickets</a>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="card event-card">
+                    <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=800&q=80"
+                        alt="Workshop" class="event-img">
+                    <div class="event-content">
+                        <span class="event-tag">Workshop</span>
+                        <h3>Creative Design Workshop</h3>
+                        <div class="event-meta">
+                            <span><i class="ri-calendar-line"></i> Dec 01, 2026</span>
+                            <span><i class="ri-map-pin-line"></i> London, UK</span>
+                        </div>
+                        <div class="event-footer">
+                            <span class="event-price">$89.00</span>
+                            <a href="event-details.html" class="btn btn-primary btn-sm">Get Tickets</a>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="card event-card">
+                    <img src="https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?auto=format&fit=crop&w=800&q=80"
+                        alt="Party" class="event-img">
+                    <div class="event-content">
+                        <span class="event-tag">Social</span>
+                        <h3>Summer Yacht Party</h3>
+                        <div class="event-meta">
+                            <span><i class="ri-calendar-line"></i> Aug 20, 2026</span>
+                            <span><i class="ri-map-pin-line"></i> Monaco</span>
+                        </div>
+                        <div class="event-footer">
+                            <span class="event-price">$599.00</span>
+                            <a href="event-details.html" class="btn btn-primary btn-sm">Get Tickets</a>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </section>
+    </main>
+
+    <script src="js/app.js"></script>
+</body>
+
+</html>

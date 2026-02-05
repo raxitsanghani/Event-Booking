@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Global Tech Summit 2026 | EventFlow</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css">
+    <style>
+        .detail-header {
+            padding: 8rem 0 4rem;
+            display: grid;
+            grid-template-columns: 1.5fr 1fr;
+            gap: 4rem;
+        }
+
+        .event-banner {
+            width: 100%;
+            height: 500px;
+            border-radius: 2rem;
+            object-fit: cover;
+            box-shadow: var(--shadow-xl);
+        }
+
+        .booking-sidebar {
+            position: sticky;
+            top: 7rem;
+            height: fit-content;
+        }
+
+        .detail-content h1 {
+            font-size: 3rem;
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .info-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: 2rem;
+            font-size: 0.875rem;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .section-header {
+            margin: 3rem 0 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .organizer-card {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-top: 2rem;
+            padding: 1rem;
+            border-radius: 1rem;
+            background: var(--primary-light);
+        }
+
+        @media (max-width: 992px) {
+            .detail-header {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .event-banner {
+                height: 300px;
+            }
+        }
+    </style>
+</head>
+
+<body class="fade-in">
+
+    <header>
+        <div class="container nav-container">
+            <a href="index.html" class="logo">
+                <i class="ri-flashlight-fill" style="color: var(--primary)"></i>
+                <span>EventFlow</span>
+            </a>
+            <nav class="nav-links">
+                <a href="events.html" class="nav-link">Explore Events</a>
+                <a href="dashboard.html" class="nav-link">My Bookings</a>
+                <button id="theme-toggle" class="btn btn-outline btn-icon">
+                    <i class="ri-moon-line"></i>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="detail-header">
+            <div class="detail-content">
+                <span class="event-tag">Technology</span>
+                <h1>Global Tech Summit 2026</h1>
+
+                <div style="margin-bottom: 2.5rem;">
+                    <div class="info-pill"><i class="ri-calendar-line"></i> Oct 12, 2026 - 09:00 AM</div>
+                    <div class="info-pill"><i class="ri-map-pin-line"></i> Moscone Center, San Francisco</div>
+                    <div class="info-pill"><i class="ri-user-star-line"></i> Limited Seats: 50 Remaining</div>
+                </div>
+
+                <img src="https://images.unsplash.com/photo-1540575861501-7ad05823c983?auto=format&fit=crop&w=1200&q=80"
+                    alt="Tech Summit Banner" class="event-banner">
+
+                <h3 class="section-header">About the Event</h3>
+                <p>The Global Tech Summit 2026 is the premier gathering for engineers, innovators, and thinkers. This
+                    year's summit focuses on the intersection of Artificial Intelligence, Quantum Computing, and
+                    Sustainable Technology.</p>
+                <p style="margin-top: 1rem;">Join us for three days of intensive workshops, keynote speeches from
+                    industry leaders, and unparalleled networking opportunities. Whether you're a startup founder or a
+                    seasoned CTO, this event is designed to spark new ideas and collaborations.</p>
+
+                <h3 class="section-header">Key Speakers</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1.5rem;">
+                    <div style="text-align: center;">
+                        <img src="https://ui-avatars.com/api/?name=Elon+Musk&background=random"
+                            style="width: 80px; height: 80px; border-radius: 50%; margin-bottom: 0.5rem;" alt="Speaker">
+                        <p style="font-weight: 600; color: var(--text-high);">Elon Musk</p>
+                        <p style="font-size: 0.75rem;">CEO, X Corp</p>
+                    </div>
+                    <div style="text-align: center;">
+                        <img src="https://ui-avatars.com/api/?name=Sam+Altman&background=random"
+                            style="width: 80px; height: 80px; border-radius: 50%; margin-bottom: 0.5rem;" alt="Speaker">
+                        <p style="font-weight: 600; color: var(--text-high);">Sam Altman</p>
+                        <p style="font-size: 0.75rem;">CEO, OpenAI</p>
+                    </div>
+                    <div style="text-align: center;">
+                        <img src="https://ui-avatars.com/api/?name=Mira+Murati&background=random"
+                            style="width: 80px; height: 80px; border-radius: 50%; margin-bottom: 0.5rem;" alt="Speaker">
+                        <p style="font-weight: 600; color: var(--text-high);">Mira Murati</p>
+                        <p style="font-size: 0.75rem;">CTO, OpenAI</p>
+                    </div>
+                </div>
+            </div>
+
+            <aside class="booking-sidebar">
+                <div class="card" style="padding: 2rem;">
+                    <div
+                        style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                        <span style="font-size: 0.875rem; font-weight: 600; color: var(--text-low);">Price per
+                            ticket</span>
+                        <h2 style="font-size: 2rem;">$299.00</h2>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Select Quantity</label>
+                        <select class="form-input">
+                            <option>1 Ticket</option>
+                            <option>2 Tickets</option>
+                            <option>3 Tickets</option>
+                            <option>4 Tickets</option>
+                        </select>
+                    </div>
+
+                    <div style="margin-bottom: 1.5rem;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <span>Subtotal</span>
+                            <span>$299.00</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <span>Service Fee</span>
+                            <span>$15.00</span>
+                        </div>
+                        <div
+                            style="display: flex; justify-content: space-between; font-weight: 700; color: var(--text-high); padding-top: 1rem; border-top: 1px solid var(--border);">
+                            <span>Total</span>
+                            <span>$314.00</span>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-primary" style="width: 100%; border-radius: 1rem;"
+                        onclick="processBooking()">
+                        Book Now <i class="ri-ticket-line"></i>
+                    </button>
+
+                    <p style="text-align: center; font-size: 0.75rem; margin-top: 1rem; color: var(--text-low);">
+                        Free cancellation up to 48 hours before the event.
+                    </p>
+
+                    <div class="organizer-card">
+                        <img src="https://ui-avatars.com/api/?name=Tech+Events+Inc&background=random"
+                            style="width: 40px; height: 40px; border-radius: 0.5rem;" alt="Org">
+                        <div>
+                            <p style="font-size: 0.875rem; font-weight: 600; color: var(--text-high);">Tech Events Inc.
+                            </p>
+                            <p style="font-size: 0.75rem;">Verified Organizer</p>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </main>
+
+    <footer style="padding: 4rem 0; border-top: 1px solid var(--border); margin-top: 4rem;">
+        <div class="container" style="text-align: center;">
+            <p>&copy; 2026 EventFlow. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="js/app.js"></script>
+    <script>
+        function processBooking() {
+            const btn = document.querySelector('.booking-sidebar .btn-primary');
+            btn.innerHTML = '<i class="ri-loader-4-line spin"></i> Processing...';
+            btn.disabled = true;
+
+            setTimeout(() => {
+                showToast('Booking Successful! Check your email.', 'success');
+                setTimeout(() => {
+                    window.location.href = 'dashboard.html';
+                }, 1500);
+            }, 2000);
+        }
+    </script>
+    <style>
+        .spin {
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</body>
+
+</html>

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login | EventFlow Console</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css">
+    <style>
+        body {
+            background: #0f172a;
+            /* Force dark for admin login */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .admin-auth-card {
+            max-width: 400px;
+            width: 100%;
+            background: #1e293b;
+            border: 1px solid #334155;
+            padding: 3rem;
+            border-radius: 1.5rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        .admin-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: rgba(99, 102, 241, 0.1);
+            color: #818cf8;
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            border-radius: 2rem;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 1.5rem;
+        }
+
+        .admin-logo {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .admin-subtitle {
+            color: #94a3b8;
+            font-size: 0.875rem;
+            margin-bottom: 2.5rem;
+        }
+    </style>
+</head>
+
+<body class="fade-in">
+
+    <div class="admin-auth-card">
+        <center>
+            <span class="admin-badge">Secure Access</span>
+            <div class="admin-logo">
+                <i class="ri-shield-user-fill" style="color: #6366f1"></i>
+                <span>EventFlow <span style="font-weight: 300; opacity: 0.7;">Admin</span></span>
+            </div>
+            <p class="admin-subtitle">Enterprise Resource Management Console</p>
+        </center>
+
+        <form id="admin-login-form">
+            <div class="form-group">
+                <label class="form-label" style="color: #f1f5f9;">Admin Identifier</label>
+                <input type="text" class="form-input" style="background: #0f172a; border-color: #334155; color: white;"
+                    placeholder="admin_username" required>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" style="color: #f1f5f9;">Security Key</label>
+                <input type="password" class="form-input"
+                    style="background: #0f172a; border-color: #334155; color: white;" placeholder="••••••••" required>
+            </div>
+
+            <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem; background: #6366f1;">
+                Initialize Session <i class="ri-terminal-box-line"></i>
+            </button>
+        </form>
+
+        <div style="margin-top: 2rem; text-align: center;">
+            <a href="index.html"
+                style="font-size: 0.875rem; color: #64748b; display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
+                <i class="ri-arrow-left-line"></i> Back to Frontend
+            </a>
+        </div>
+    </div>
+
+    <script src="js/app.js"></script>
+    <script>
+        document.getElementById('admin-login-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const btn = e.target.querySelector('button');
+            btn.innerHTML = '<i class="ri-loader-4-line spin"></i> Authenticating...';
+            btn.disabled = true;
+
+            setTimeout(() => {
+                showToast('Authorization granted. Launching console...', 'success');
+                setTimeout(() => {
+                    window.location.href = 'admin.html';
+                }, 1000);
+            }, 1500);
+        });
+    </script>
+    <style>
+        .spin {
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</body>
+
+</html>
