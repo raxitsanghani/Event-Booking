@@ -1,0 +1,143 @@
+openapi: 3.0.0
+info:
+  title: Event Booking System API
+  version: 1.0.0
+  description: API for managing events and bookings
+servers:
+  - url: http://localhost:5000/api
+paths:
+  /users/register:
+    post:
+      summary: Register a new user
+      tags: [Users]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name: { type: string }
+                email: { type: string }
+                password: { type: string }
+                role: { type: string, enum: [user, admin] }
+      responses:
+        201:
+          description: User registered
+  /users/login:
+    post:
+      summary: Login user
+      tags: [Users]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email: { type: string }
+                password: { type: string }
+      responses:
+        200:
+          description: Login successful
+  /events:
+    get:
+      summary: Get all events
+      tags: [Events]
+      parameters:
+        - name: start
+          in: query
+          schema: { type: string, format: date }
+        - name: end
+          in: query
+          schema: { type: string, format: date }
+        - name: page
+          in: query
+          schema: { type: integer }
+        - name: limit
+          in: query
+          schema: { type: integer }
+      responses:
+        200:
+          description: List of events
+    post:
+      summary: Create an event (Admin only)
+      tags: [Events]
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name: { type: string }
+                date: { type: string, format: date-time }
+                capacity: { type: integer }
+      responses:
+        201:
+          description: Event created
+  /events/{id}:
+    put:
+      summary: Update an event (Admin only)
+      tags: [Events]
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        200:
+          description: Event updated
+    delete:
+      summary: Delete an event (Admin only)
+      tags: [Events]
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        200:
+          description: Event deleted
+  /bookings:
+    post:
+      summary: Book an event
+      tags: [Bookings]
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                eventId: { type: string }
+      responses:
+        201:
+          description: Booking successful
+  /bookings/export:
+    get:
+      summary: Export bookings as CSV (Admin only)
+      tags: [Bookings]
+      security:
+        - bearerAuth: []
+      responses:
+        200:
+          description: CSV file
+          content:
+            text/csv:
+              schema: { type: string, format: binary }
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
