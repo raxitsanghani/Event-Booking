@@ -130,6 +130,23 @@
     </div>
 
     <script src="js/app.js"></script>
+    <script>
+        document.querySelectorAll('.admin-table select').forEach(select => {
+            select.addEventListener('change', function () {
+                const status = this.value;
+                if (status !== 'Update Status') {
+                    const row = this.closest('tr');
+                    const bookingId = row.cells[0].textContent;
+                    const eventName = row.cells[2].textContent;
+
+                    showToast(`Booking ${bookingId} updated to ${status}`, 'success');
+
+                    // Add notification for the user
+                    addNotification('Booking Updated', `Your booking for ${eventName} (${bookingId}) has been marked as ${status}.`);
+                }
+            });
+        });
+    </script>
 </body>
 
 </html>

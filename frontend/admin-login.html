@@ -104,10 +104,12 @@
         document.getElementById('admin-login-form').addEventListener('submit', (e) => {
             e.preventDefault();
             const btn = e.target.querySelector('button');
+            const uid = e.target.querySelector('input[type="text"]').value;
             btn.innerHTML = '<i class="ri-loader-4-line spin"></i> Authenticating...';
             btn.disabled = true;
 
             setTimeout(() => {
+                saveSession('admin-mock-token', { uid, role: 'admin' });
                 showToast('Authorization granted. Launching console...', 'success');
                 setTimeout(() => {
                     window.location.href = 'admin.html';

@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notifications | EventFlow</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css">
+    <style>
+        .dashboard-layout {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 3rem;
+            margin-top: 4rem;
+        }
+
+        .dashboard-nav {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            position: sticky;
+            top: 8rem;
+        }
+
+        .dash-link {
+            padding: 1rem 1.5rem;
+            border-radius: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            font-weight: 500;
+            color: var(--text-mid);
+            transition: var(--transition-fast);
+        }
+
+        .dash-link:hover,
+        .dash-link.active {
+            background: var(--primary-light);
+            color: var(--primary);
+        }
+
+        .dash-link.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .notification-card {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            transition: var(--transition-normal);
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .notification-card.unread {
+            border-left: 4px solid var(--primary);
+            background: var(--bg-surface);
+        }
+
+        .notification-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--primary-light);
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            flex-shrink: 0;
+        }
+
+        .notification-content {
+            flex-grow: 1;
+        }
+
+        .notification-time {
+            font-size: 0.75rem;
+            color: var(--text-low);
+            margin-top: 0.25rem;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 992px) {
+            .dashboard-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .dashboard-nav {
+                flex-direction: row;
+                overflow-x: auto;
+                padding-bottom: 1rem;
+                position: static;
+            }
+        }
+    </style>
+</head>
+
+<body class="fade-in">
+
+    <header>
+        <div style="padding: 1.5rem 3rem; display: flex; justify-content: space-between; align-items: center;">
+            <a href="index.html" class="logo" style="font-size: 3.5rem; display: flex; align-items: center;">
+                <i class="ri-flashlight-fill" style="color: var(--primary)"></i>
+            </a>
+
+            <div style="display: flex; align-items: center; gap: 1.5rem;">
+                <button id="theme-toggle" class="btn btn-outline btn-icon"
+                    style="width: 50px; height: 50px; font-size: 1.5rem;" title="Toggle Theme">
+                    <i class="ri-moon-line"></i>
+                </button>
+                <a href="index.html" class="btn btn-outline"
+                    style="padding: 0.75rem 2rem; border-radius: 0.75rem; font-weight: 600;">
+                    <i class="ri-arrow-left-line"></i> Back
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="dashboard-layout" style="padding: 0 3rem;">
+        <aside>
+            <div class="dashboard-nav"
+                style="border: 1px solid var(--border); padding: 1rem; border-radius: 1.5rem; background: var(--bg-surface);">
+                <a href="dashboard.html" class="dash-link"><i class="ri-ticket-2-line"></i> My Bookings</a>
+                <a href="profile.html" class="dash-link"><i class="ri-user-settings-line"></i> Profile Settings</a>
+                <a href="notifications.html" class="dash-link active"><i class="ri-notification-3-line"></i>
+                    Notifications</a>
+                <a href="#" class="dash-link logout-btn" style="color: var(--error)"><i
+                        class="ri-logout-box-r-line"></i> Logout</a>
+            </div>
+        </aside>
+
+        <section>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                <h1>Notifications</h1>
+                <button id="clear-all" class="btn btn-outline btn-sm"
+                    style="color: var(--error); border-color: var(--error);">
+                    <i class="ri-delete-bin-7-line"></i> Clear All
+                </button>
+            </div>
+
+            <div id="notification-list">
+                <!-- Notifications will be loaded from local storage -->
+                <div class="empty-state" style="text-align: center; padding: 4rem 2rem; color: var(--text-low);">
+                    <i class="ri-notification-off-line"
+                        style="font-size: 3rem; display: block; margin-bottom: 1rem;"></i>
+                    <p>No new notifications</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="js/app.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            loadNotifications();
+
+            document.getElementById('clear-all').addEventListener('click', () => {
+                if (confirm('Are you sure you want to clear all notifications?')) {
+                    localStorage.setItem('notifications', '[]');
+                    loadNotifications();
+                    showToast('All notifications cleared', 'success');
+                }
+            });
+        });
+
+        function loadNotifications() {
+            const list = document.getElementById('notification-list');
+            const notifications = JSON.parse(localStorage.getItem('notifications') || '[]');
+
+            if (notifications.length === 0) {
+                list.innerHTML = `
+                    <div class="empty-state" style="text-align: center; padding: 4rem 2rem; color: var(--text-low);">
+                        <i class="ri-notification-off-line" style="font-size: 3rem; display: block; margin-bottom: 1rem;"></i>
+                        <p>No new notifications</p>
+                    </div>
+                `;
+                return;
+            }
+
+            list.innerHTML = notifications.map((n, index) => `
+                <div class="card notification-card stagger-item ${n.unread ? 'unread' : ''}" data-index="${index}">
+                    <div class="notification-icon">
+                        <i class="ri-notification-3-line"></i>
+                    </div>
+                    <div class="notification-content">
+                        <h4 style="margin-bottom: 0.25rem;">${n.title}</h4>
+                        <p style="font-size: 0.875rem; color: var(--text-mid);">${n.message}</p>
+                        <div class="notification-time">${n.time}</div>
+                    </div>
+                    <button class="btn btn-icon btn-sm delete-notification" style="color: var(--error);">
+                        <i class="ri-close-line"></i>
+                    </button>
+                </div>
+            `).join('');
+
+            // Add delete event listeners
+            document.querySelectorAll('.delete-notification').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const index = e.target.closest('.notification-card').dataset.index;
+                    deleteNotification(index);
+                });
+            });
+        }
+
+        function deleteNotification(index) {
+            const notifications = JSON.parse(localStorage.getItem('notifications') || '[]');
+            notifications.splice(index, 1);
+            localStorage.setItem('notifications', JSON.stringify(notifications));
+            loadNotifications();
+            showToast('Notification removed', 'success');
+        }
+    </script>
+</body>
+
+</html>

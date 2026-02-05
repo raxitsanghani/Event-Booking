@@ -153,14 +153,19 @@
         document.getElementById('register-form').addEventListener('submit', (e) => {
             e.preventDefault();
             const btn = e.target.querySelector('button');
+            const firstName = e.target.querySelector('input[placeholder="John"]').value;
+            const lastName = e.target.querySelector('input[placeholder="Doe"]').value;
+            const email = e.target.querySelector('input[type="email"]').value;
 
             btn.innerHTML = '<i class="ri-loader-4-line spin"></i> Creating account...';
             btn.disabled = true;
 
             setTimeout(() => {
-                showToast('Account created successfully!', 'success');
+                // Save session on signup too as requested
+                saveSession('user-mock-token', { name: `${firstName} ${lastName}`, email: email, role: 'user' });
+                showToast('Account created! Welcome to EventFlow.', 'success');
                 setTimeout(() => {
-                    window.location.href = 'login.html';
+                    window.location.href = 'index.html';
                 }, 1000);
             }, 1500);
         });

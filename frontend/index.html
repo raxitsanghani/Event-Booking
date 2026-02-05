@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EventFlow | Premium Event Booking</title>
     <!-- Meta Tags for SEO -->
-    <meta name="description" content="Discover and book premium events with EventFlow. The most seamless event management experience.">
+    <meta name="description"
+        content="Discover and book premium events with EventFlow. The most seamless event management experience.">
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="css/components.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css">
@@ -16,14 +18,17 @@
             text-align: center;
             background: radial-gradient(circle at top right, var(--primary-light), transparent);
         }
+
         .hero h1 {
             font-size: 4rem;
             line-height: 1.1;
             margin-bottom: 1.5rem;
             background: linear-gradient(to right, var(--primary), var(--secondary));
             -webkit-background-clip: text;
+            background-clip: text;
             -webkit-text-fill-color: transparent;
         }
+
         .hero p {
             font-size: 1.25rem;
             max-width: 600px;
@@ -42,11 +47,13 @@
             border-bottom: 1px solid var(--border);
             padding: 1rem 0;
         }
+
         .nav-container {
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
+
         .logo {
             font-family: 'Outfit', sans-serif;
             font-size: 1.5rem;
@@ -56,16 +63,21 @@
             gap: 0.5rem;
             color: var(--text-high);
         }
+
         .nav-links {
             display: flex;
             gap: 2rem;
             align-items: center;
         }
+
         .nav-link {
             font-weight: 500;
             color: var(--text-mid);
         }
-        .nav-link:hover { color: var(--primary); }
+
+        .nav-link:hover {
+            color: var(--primary);
+        }
 
         /* Event Grid */
         .section-title {
@@ -74,16 +86,19 @@
             justify-content: space-between;
             align-items: flex-end;
         }
+
         .event-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
             gap: 2rem;
         }
+
         .event-card {
             overflow: hidden;
             display: flex;
             flex-direction: column;
         }
+
         .event-img {
             width: 100%;
             height: 200px;
@@ -91,13 +106,16 @@
             border-radius: 0.75rem;
             transition: var(--transition-slow);
         }
+
         .event-card:hover .event-img {
             transform: scale(1.05);
         }
+
         .event-content {
             padding-top: 1.5rem;
             flex-grow: 1;
         }
+
         .event-tag {
             display: inline-block;
             padding: 0.25rem 0.75rem;
@@ -108,6 +126,7 @@
             font-weight: 600;
             margin-bottom: 0.75rem;
         }
+
         .event-meta {
             display: flex;
             gap: 1rem;
@@ -115,6 +134,7 @@
             color: var(--text-low);
             margin-bottom: 1rem;
         }
+
         .event-footer {
             display: flex;
             justify-content: space-between;
@@ -123,6 +143,7 @@
             padding-top: 1.5rem;
             border-top: 1px solid var(--border);
         }
+
         .event-price {
             font-size: 1.25rem;
             font-weight: 700;
@@ -130,12 +151,21 @@
         }
 
         @media (max-width: 768px) {
-            .hero h1 { font-size: 2.5rem; }
-            .nav-links { display: none; }
-            .event-grid { grid-template-columns: 1fr; }
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .event-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
+
 <body class="fade-in">
 
     <header>
@@ -146,8 +176,10 @@
             </a>
             <nav class="nav-links">
                 <a href="events.html" class="nav-link">Explore Events</a>
-                <a href="login.html" class="nav-link">Login</a>
-                <a href="register.html" class="btn btn-primary">Join Now</a>
+                <div id="nav-auth" style="display: flex; align-items: center; gap: 1rem;">
+                    <a href="login.html" class="nav-link">Login</a>
+                    <a href="register.html" class="btn btn-primary">Join Now</a>
+                </div>
                 <button id="theme-toggle" class="btn btn-outline btn-icon" title="Toggle Theme">
                     <i class="ri-moon-line"></i>
                 </button>
@@ -163,7 +195,8 @@
             <div class="container">
                 <span class="event-tag" style="margin-bottom: 1.5rem">New Era of Event Booking</span>
                 <h1>Discover Moments That <br> Define Your Future</h1>
-                <p>Join thousands of attendees in the world's most exclusive tech conferences, music festivals, and workshops.</p>
+                <p>Join thousands of attendees in the world's most exclusive tech conferences, music festivals, and
+                    workshops.</p>
                 <div style="display: flex; gap: 1rem; justify-content: center;">
                     <a href="events.html" class="btn btn-primary">Browse Events</a>
                     <a href="#how-it-works" class="btn btn-outline">Watch Demo</a>
@@ -177,13 +210,15 @@
                     <span class="event-tag">Curated for You</span>
                     <h2>Featured Events</h2>
                 </div>
-                <a href="events.html" class="nav-link" style="font-weight: 600;">View All <i class="ri-arrow-right-line"></i></a>
+                <a href="events.html" class="nav-link" style="font-weight: 600;">View All <i
+                        class="ri-arrow-right-line"></i></a>
             </div>
 
             <div class="event-grid">
                 <!-- Example Event Card 1 -->
-                <article class="card event-card">
-                    <img src="https://images.unsplash.com/photo-1540575861501-7ad05823c983?auto=format&fit=crop&w=800&q=80" alt="Tech Conference" class="event-img">
+                <article class="card event-card stagger-item">
+                    <img src="https://images.unsplash.com/photo-1540575861501-7ad05823c983?auto=format&fit=crop&w=800&q=80"
+                        alt="Tech Conference" class="event-img">
                     <div class="event-content">
                         <span class="event-tag">Technology</span>
                         <h3>Global Tech Summit 2026</h3>
@@ -200,10 +235,12 @@
                 </article>
 
                 <!-- Example Event Card 2 -->
-                <article class="card event-card">
-                    <img src="https://images.unsplash.com/photo-1459749411177-042180ce673b?auto=format&fit=crop&w=800&q=80" alt="Music Festival" class="event-img">
+                <article class="card event-card stagger-item">
+                    <img src="https://images.unsplash.com/photo-1459749411177-042180ce673b?auto=format&fit=crop&w=800&q=80"
+                        alt="Music Festival" class="event-img">
                     <div class="event-content">
-                        <span class="event-tag" style="background: rgba(16, 185, 129, 0.1); color: #10B981;">Music</span>
+                        <span class="event-tag"
+                            style="background: rgba(16, 185, 129, 0.1); color: #10B981;">Music</span>
                         <h3>Neon Beats Festival</h3>
                         <div class="event-meta">
                             <span><i class="ri-calendar-line"></i> Nov 05, 2026</span>
@@ -218,10 +255,12 @@
                 </article>
 
                 <!-- Example Event Card 3 -->
-                <article class="card event-card">
-                    <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=800&q=80" alt="Workshop" class="event-img">
+                <article class="card event-card stagger-item">
+                    <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=800&q=80"
+                        alt="Workshop" class="event-img">
                     <div class="event-content">
-                        <span class="event-tag" style="background: rgba(245, 158, 11, 0.1); color: #f59e0b;">Workshop</span>
+                        <span class="event-tag"
+                            style="background: rgba(245, 158, 11, 0.1); color: #f59e0b;">Workshop</span>
                         <h3>Creative Design Workshop</h3>
                         <div class="event-meta">
                             <span><i class="ri-calendar-line"></i> Dec 01, 2026</span>
@@ -239,7 +278,8 @@
     </main>
 
     <footer style="padding: 4rem 0; border-top: 1px solid var(--border); margin-top: 4rem;">
-        <div class="container" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 3rem;">
+        <div class="container"
+            style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 3rem;">
             <div>
                 <a href="#" class="logo" style="margin-bottom: 1.5rem">
                     <i class="ri-flashlight-fill" style="color: var(--primary)"></i>
@@ -274,11 +314,13 @@
                 </div>
             </div>
         </div>
-        <div class="container" style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center;">
+        <div class="container"
+            style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center;">
             <p>&copy; 2026 EventFlow. All rights reserved.</p>
         </div>
     </footer>
 
     <script src="js/app.js"></script>
 </body>
+
 </html>

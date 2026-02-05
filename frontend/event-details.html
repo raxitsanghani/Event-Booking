@@ -89,7 +89,10 @@
             <nav class="nav-links">
                 <a href="events.html" class="nav-link">Explore Events</a>
                 <a href="dashboard.html" class="nav-link">My Bookings</a>
-                <button id="theme-toggle" class="btn btn-outline btn-icon">
+                <div id="nav-auth" style="display: flex; align-items: center; gap: 1rem;">
+                    <!-- JS will populate -->
+                </div>
+                <button id="theme-toggle" class="btn btn-outline btn-icon" title="Toggle Theme">
                     <i class="ri-moon-line"></i>
                 </button>
             </nav>
@@ -210,11 +213,14 @@
     <script>
         function processBooking() {
             const btn = document.querySelector('.booking-sidebar .btn-primary');
+            const eventTitle = document.querySelector('.detail-content h1').textContent;
             btn.innerHTML = '<i class="ri-loader-4-line spin"></i> Processing...';
             btn.disabled = true;
 
             setTimeout(() => {
                 showToast('Booking Successful! Check your email.', 'success');
+                addNotification('Booking Confirmed', `You have successfully booked tickets for ${eventTitle}.`);
+
                 setTimeout(() => {
                     window.location.href = 'dashboard.html';
                 }, 1500);

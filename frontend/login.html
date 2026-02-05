@@ -186,11 +186,13 @@
 
             setTimeout(() => {
                 if (email === 'raxit095@gmail.com' && passwordVal === 'raxit2112') {
+                    saveSession('admin-mock-token', { email, role: 'admin' });
                     showToast('Admin access granted!', 'success');
                     setTimeout(() => {
                         window.location.href = 'admin.html';
                     }, 1000);
                 } else {
+                    saveSession('user-mock-token', { email, role: 'user' });
                     showToast('Welcome back! Redirecting...', 'success');
                     setTimeout(() => {
                         window.location.href = 'index.html';
