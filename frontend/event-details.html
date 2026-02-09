@@ -111,7 +111,7 @@
                     <div class="info-pill"><i class="ri-user-star-line"></i> Limited Seats: 50 Remaining</div>
                 </div>
 
-                <img src="https://images.unsplash.com/photo-1540575861501-7ad05823c983?auto=format&fit=crop&w=1200&q=80"
+                <img src="https://images.unsplash.com/photo-1505373877841-8d25f7d46678?auto=format&fit=crop&w=1200&q=80"
                     alt="Tech Summit Banner" class="event-banner">
 
                 <h3 class="section-header">About the Event</h3>
@@ -181,7 +181,7 @@
                     </div>
 
                     <button class="btn btn-primary" style="width: 100%; border-radius: 1rem;"
-                        onclick="processBooking()">
+                        onclick="openBookingModal()">
                         Book Now <i class="ri-ticket-line"></i>
                     </button>
 
@@ -209,22 +209,188 @@
         </div>
     </footer>
 
+    <!-- Booking Modal -->
+    <div id="booking-modal" class="modal-overlay">
+        <div class="modal-content" id="selection-step">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                <h3 style="margin: 0;">Complete Your Booking</h3>
+                <button class="btn btn-icon btn-outline" onclick="closeModal('booking-modal')">
+                    <i class="ri-close-line"></i>
+                </button>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Select Date</label>
+                <div style="position: relative;">
+                    <i class="ri-calendar-event-line"
+                        style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--text-low);"></i>
+                    <input type="date" id="booking-date" class="form-input" style="padding-left: 2.5rem;"
+                        onchange="updateSelectedDay()">
+                </div>
+                <div id="selected-day-display"
+                    style="margin-top: 0.5rem; font-size: 0.875rem; font-weight: 600; color: var(--primary); display: none;">
+                    <i class="ri-calendar-check-line"></i> <span id="day-name"></span>
+                </div>
+                <small style="color: var(--text-low); margin-top: 0.5rem; display: block;">Only future dates are
+                    available</small>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Select Time Slot</label>
+                <div style="position: relative;">
+                    <i class="ri-time-line"
+                        style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--text-low);"></i>
+                    <select id="booking-time" class="form-input" style="padding-left: 2.5rem;">
+                        <option value="" disabled selected>Pick a time...</option>
+                        <option value="09:00 AM">09:00 AM</option>
+                        <option value="10:00 AM">10:00 AM</option>
+                        <option value="11:30 AM">11:30 AM</option>
+                        <option value="02:00 PM">02:00 PM</option>
+                        <option value="04:30 PM">04:30 PM</option>
+                        <option value="06:00 PM">06:00 PM</option>
+                        <option value="08:00 PM">08:00 PM</option>
+                    </select>
+                </div>
+            </div>
+
+            <div style="margin-top: 2rem; display: flex; gap: 1rem;">
+                <button class="btn btn-outline" style="flex: 1" onclick="closeModal('booking-modal')">Cancel</button>
+                <button class="btn btn-primary" style="flex: 2" onclick="showPaymentStep()">
+                    Continue to Payment
+                </button>
+            </div>
+        </div>
+
+        <div class="modal-content" id="payment-step" style="display: none;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                <h3 style="margin: 0;">Payment Details</h3>
+                <button class="btn btn-icon btn-outline" onclick="closeModal('booking-modal')">
+                    <i class="ri-close-line"></i>
+                </button>
+            </div>
+
+            <div class="card"
+                style="margin-bottom: 2rem; background: var(--bg-main); border: 1px dashed var(--border);">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 0.75rem;">
+                    <span style="color: var(--text-low);">Base Amount</span>
+                    <span id="summary-subtotal" style="font-weight: 500;">$0.00</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 0.75rem;">
+                    <span style="color: var(--text-low);">GST (18%)</span>
+                    <span id="summary-gst" style="color: var(--success); font-weight: 500;">+$0.00</span>
+                </div>
+                <div
+                    style="display: flex; justify-content: space-between; padding-top: 1rem; border-top: 1px solid var(--border); margin-top: 0.5rem;">
+                    <span style="font-weight: 600; color: var(--text-high);">Total Payable</span>
+                    <span id="summary-total"
+                        style="font-weight: 700; color: var(--primary); font-size: 1.25rem;">$0.00</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Payment Method</label>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                    <label class="payment-option">
+                        <input type="radio" name="payment-method" value="upi" checked style="display: none;">
+                        <div class="payment-card">
+                            <i class="ri-qr-code-line"></i>
+                            <span>UPI Pay</span>
+                        </div>
+                    </label>
+                    <label class="payment-option">
+                        <input type="radio" name="payment-method" value="card" style="display: none;">
+                        <div class="payment-card">
+                            <i class="ri-bank-card-line"></i>
+                            <span>Card Pay</span>
+                        </div>
+                    </label>
+                </div>
+            </div>
+
+            <div style="margin-top: 2rem; display: flex; gap: 1rem;">
+                <button class="btn btn-outline" style="flex: 1" onclick="backToSelection()">Back</button>
+                <button id="final-confirm-btn" class="btn btn-primary" style="flex: 2" onclick="processFinalBooking()">
+                    Confirm & Pay
+                </button>
+            </div>
+        </div>
+    </div>
+
     <script src="js/app.js"></script>
     <script>
-        function processBooking() {
-            const btn = document.querySelector('.booking-sidebar .btn-primary');
+        function openBookingModal() {
+            document.getElementById('selection-step').style.display = 'block';
+            document.getElementById('payment-step').style.display = 'none';
+
+            const dateInput = document.getElementById('booking-date');
+            const today = new Date();
+            const tomorrow = new Date(today);
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            dateInput.setAttribute('min', tomorrow.toISOString().split('T')[0]);
+
+            openModal('booking-modal');
+        }
+
+        function updateSelectedDay() {
+            const dateVal = document.getElementById('booking-date').value;
+            const display = document.getElementById('selected-day-display');
+            const dayName = document.getElementById('day-name');
+
+            if (dateVal) {
+                const date = new Date(dateVal);
+                const options = { weekday: 'long' };
+                dayName.textContent = new Intl.DateTimeFormat('en-US', options).format(date);
+                display.style.display = 'block';
+            } else {
+                display.style.display = 'none';
+            }
+        }
+
+        function showPaymentStep() {
+            const date = document.getElementById('booking-date').value;
+            const time = document.getElementById('booking-time').value;
+
+            if (!date || !time) {
+                showToast('Please select both date and time to continue', 'warning');
+                return;
+            }
+
+            const subtotalStr = document.querySelector('.booking-sidebar h2').innerText.replace('$', '');
+            const subtotal = parseFloat(subtotalStr);
+            const gst = subtotal * 0.18;
+            const total = subtotal + gst;
+
+            document.getElementById('summary-subtotal').innerText = `$${subtotal.toFixed(2)}`;
+            document.getElementById('summary-gst').innerText = `+$${gst.toFixed(2)}`;
+            document.getElementById('summary-total').innerText = `$${total.toFixed(2)}`;
+
+            document.getElementById('selection-step').style.display = 'none';
+            document.getElementById('payment-step').style.display = 'block';
+        }
+
+        function backToSelection() {
+            document.getElementById('selection-step').style.display = 'block';
+            document.getElementById('payment-step').style.display = 'none';
+        }
+
+        function processFinalBooking() {
+            const btn = document.getElementById('final-confirm-btn');
             const eventTitle = document.querySelector('.detail-content h1').textContent;
-            btn.innerHTML = '<i class="ri-loader-4-line spin"></i> Processing...';
+            const date = document.getElementById('booking-date').value;
+            const time = document.getElementById('booking-time').value;
+
+            btn.innerHTML = '<i class="ri-loader-4-line spin"></i> Processing Payment...';
             btn.disabled = true;
 
             setTimeout(() => {
-                showToast('Booking Successful! Check your email.', 'success');
-                addNotification('Booking Confirmed', `You have successfully booked tickets for ${eventTitle}.`);
+                closeModal('booking-modal');
+                showToast('Payment Successful! Check your email.', 'success');
+                addNotification('Booking Confirmed', `You have successfully booked tickets for ${eventTitle} on ${date} at ${time}.`);
 
                 setTimeout(() => {
                     window.location.href = 'dashboard.html';
                 }, 1500);
-            }, 2000);
+            }, 2500);
         }
     </script>
     <style>
@@ -240,6 +406,39 @@
             to {
                 transform: rotate(360deg);
             }
+        }
+
+        .payment-option {
+            cursor: pointer;
+        }
+
+        .payment-card {
+            border: 1px solid var(--border);
+            border-radius: 1rem;
+            padding: 1.5rem 1rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.75rem;
+            transition: var(--transition-normal);
+            background: var(--bg-surface);
+            color: var(--text-mid);
+        }
+
+        .payment-option input:checked+.payment-card {
+            border-color: var(--primary);
+            background: var(--primary-light);
+            color: var(--primary);
+            box-shadow: 0 0 0 1px var(--primary);
+        }
+
+        .payment-card i {
+            font-size: 2rem;
+        }
+
+        .payment-card span {
+            font-size: 0.875rem;
+            font-weight: 600;
         }
     </style>
 </body>
