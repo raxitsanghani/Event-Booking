@@ -155,6 +155,42 @@ function addNotification(title, message) {
 }
 
 /**
+ * Global Booking System
+ */
+function saveBooking(bookingData) {
+    const bookings = getBookings();
+    const newBooking = {
+        id: 'BK-' + Math.random().toString(36).substr(2, 9).toUpperCase(),
+        ...bookingData,
+        timestamp: new Date().getTime()
+    };
+    bookings.unshift(newBooking);
+    localStorage.setItem('bookings', JSON.stringify(bookings));
+    return newBooking;
+}
+
+function getBookings() {
+    return JSON.parse(localStorage.getItem('bookings') || '[]');
+}
+
+function deleteBooking(bookingId) {
+    const bookings = getBookings().filter(b => b.id !== bookingId);
+    localStorage.setItem('bookings', JSON.stringify(bookings));
+    return bookings;
+}
+
+function updateBookingStatus(bookingId, status) {
+    const bookings = getBookings().map(b => {
+        if (b.id === bookingId) {
+            return { ...b, status };
+        }
+        return b;
+    });
+    localStorage.setItem('bookings', JSON.stringify(bookings));
+    return bookings;
+}
+
+/**
  * Global Logout Handling
  */
 document.addEventListener('click', (e) => {

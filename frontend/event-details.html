@@ -156,11 +156,11 @@
 
                     <div class="form-group">
                         <label class="form-label">Select Quantity</label>
-                        <select class="form-input">
-                            <option>1 Ticket</option>
-                            <option>2 Tickets</option>
-                            <option>3 Tickets</option>
-                            <option>4 Tickets</option>
+                        <select id="ticket-quantity" class="form-input">
+                            <option value="1">1 Ticket</option>
+                            <option value="2">2 Tickets</option>
+                            <option value="3">3 Tickets</option>
+                            <option value="4">4 Tickets</option>
                         </select>
                     </div>
 
@@ -217,6 +217,28 @@
                 <button class="btn btn-icon btn-outline" onclick="closeModal('booking-modal')">
                     <i class="ri-close-line"></i>
                 </button>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                <div class="form-group">
+                    <label class="form-label">Full Name</label>
+                    <div style="position: relative;">
+                        <i class="ri-user-line"
+                            style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--text-low);"></i>
+                        <input type="text" id="booking-name" class="form-input" placeholder="Enter your name"
+                            style="padding-left: 2.5rem;">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Mobile Number</label>
+                    <div style="position: relative;">
+                        <i class="ri-phone-line"
+                            style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--text-low);"></i>
+                        <input type="text" id="booking-mobile" class="form-input" placeholder="Enter mobile"
+                            style="padding-left: 2.5rem;" maxlength="10"
+                            oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                    </div>
+                </div>
             </div>
 
             <div class="form-group">
@@ -314,6 +336,70 @@
                 </button>
             </div>
         </div>
+
+        <div class="modal-content" id="upi-step" style="display: none;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                <h3 style="margin: 0;">UPI Payment</h3>
+                <button class="btn btn-icon btn-outline" onclick="closeModal('booking-modal')">
+                    <i class="ri-close-line"></i>
+                </button>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Enter UPI ID</label>
+                <div style="position: relative;">
+                    <i class="ri-at-line"
+                        style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--text-low);"></i>
+                    <input type="text" id="upi-id" class="form-input" placeholder="username@bank"
+                        style="padding-left: 2.5rem;">
+                </div>
+                <small style="color: var(--text-low); margin-top: 0.5rem; display: block;">Enter your VPA to proceed
+                    with
+                    payment</small>
+            </div>
+            <div style="margin-top: 2rem; display: flex; gap: 1rem;">
+                <button class="btn btn-outline" style="flex: 1" onclick="backToPayment()">Back</button>
+                <button id="upi-submit-btn" class="btn btn-primary" style="flex: 2" onclick="completePayment('upi')">
+                    Pay Now
+                </button>
+            </div>
+        </div>
+
+        <div class="modal-content" id="card-step" style="display: none;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                <h3 style="margin: 0;">Card Details</h3>
+                <button class="btn btn-icon btn-outline" onclick="closeModal('booking-modal')">
+                    <i class="ri-close-line"></i>
+                </button>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Card Number</label>
+                <div style="position: relative;">
+                    <i class="ri-bank-card-line"
+                        style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--text-low);"></i>
+                    <input type="text" id="card-number" class="form-input" placeholder="0000 0000 0000 0000"
+                        style="padding-left: 2.5rem;" maxlength="16"
+                        oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                </div>
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                <div class="form-group">
+                    <label class="form-label">Expiry (MM/YY)</label>
+                    <input type="text" id="card-expiry" class="form-input" placeholder="MM/YY" maxlength="5"
+                        oninput="formatExpiry(this)">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">CVV</label>
+                    <input type="password" id="card-cvv" class="form-input" placeholder="***" maxlength="3"
+                        oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                </div>
+            </div>
+            <div style="margin-top: 3.5rem; display: flex; gap: 1rem;">
+                <button class="btn btn-outline" style="flex: 1" onclick="backToPayment()">Back</button>
+                <button id="card-submit-btn" class="btn btn-primary" style="flex: 2" onclick="completePayment('card')">
+                    Pay Now
+                </button>
+            </div>
+        </div>
     </div>
 
     <script src="js/app.js"></script>
@@ -321,6 +407,8 @@
         function openBookingModal() {
             document.getElementById('selection-step').style.display = 'block';
             document.getElementById('payment-step').style.display = 'none';
+            document.getElementById('upi-step').style.display = 'none';
+            document.getElementById('card-step').style.display = 'none';
 
             const dateInput = document.getElementById('booking-date');
             const today = new Date();
@@ -347,9 +435,19 @@
         }
 
         function showPaymentStep() {
+            const name = document.getElementById('booking-name').value;
+            const mobile = document.getElementById('booking-mobile').value;
             const date = document.getElementById('booking-date').value;
             const time = document.getElementById('booking-time').value;
 
+            if (!name || name.trim().length < 2) {
+                showToast('Please enter your full name', 'warning');
+                return;
+            }
+            if (!mobile || mobile.length < 10) {
+                showToast('Please enter a valid 10-digit mobile number', 'warning');
+                return;
+            }
             if (!date || !time) {
                 showToast('Please select both date and time to continue', 'warning');
                 return;
@@ -373,16 +471,89 @@
             document.getElementById('payment-step').style.display = 'none';
         }
 
+        function formatExpiry(input) {
+            let value = input.value.replace(/[^0-9]/g, '');
+            if (value.length > 2) {
+                value = value.substring(0, 2) + '/' + value.substring(2, 4);
+            }
+            input.value = value;
+        }
+
+        function backToPayment() {
+            document.getElementById('upi-step').style.display = 'none';
+            document.getElementById('card-step').style.display = 'none';
+            document.getElementById('payment-step').style.display = 'block';
+        }
+
         function processFinalBooking() {
-            const btn = document.getElementById('final-confirm-btn');
+            const method = document.querySelector('input[name="payment-method"]:checked').value;
+
+            document.getElementById('payment-step').style.display = 'none';
+            if (method === 'upi') {
+                document.getElementById('upi-step').style.display = 'block';
+            } else {
+                document.getElementById('card-step').style.display = 'block';
+            }
+        }
+
+        function completePayment(method) {
+            const btnId = method === 'upi' ? 'upi-submit-btn' : 'card-submit-btn';
+            const btn = document.getElementById(btnId);
+
+            // Validation
+            if (method === 'upi') {
+                const upiId = document.getElementById('upi-id').value;
+                if (!upiId || !upiId.includes('@')) {
+                    showToast('Please enter a valid UPI ID', 'warning');
+                    return;
+                }
+            } else {
+                const cardNum = document.getElementById('card-number').value;
+                const expiry = document.getElementById('card-expiry').value;
+                const cvv = document.getElementById('card-cvv').value;
+                if (!cardNum || cardNum.length < 16) {
+                    showToast('Please enter a valid 16-digit card number', 'warning');
+                    return;
+                }
+                if (!expiry || !expiry.includes('/')) {
+                    showToast('Please enter expiry in MM/YY format', 'warning');
+                    return;
+                }
+                if (!cvv || cvv.length < 3) {
+                    showToast('Please enter a valid CVV', 'warning');
+                    return;
+                }
+            }
+
             const eventTitle = document.querySelector('.detail-content h1').textContent;
+            const eventImg = document.querySelector('.event-banner').src;
+            const eventLocation = document.querySelector('.info-pill i.ri-map-pin-line').parentElement.textContent.trim();
             const date = document.getElementById('booking-date').value;
             const time = document.getElementById('booking-time').value;
 
-            btn.innerHTML = '<i class="ri-loader-4-line spin"></i> Processing Payment...';
+            const name = document.getElementById('booking-name').value;
+            const mobile = document.getElementById('booking-mobile').value;
+            const quantity = document.getElementById('ticket-quantity').value;
+            const total = document.getElementById('summary-total').innerText;
+
+            btn.innerHTML = '<i class="ri-loader-4-line spin"></i> Processing...';
             btn.disabled = true;
 
             setTimeout(() => {
+                const bookingData = {
+                    eventTitle,
+                    eventImg,
+                    eventLocation,
+                    date,
+                    time,
+                    userName: name,
+                    userMobile: mobile,
+                    persons: quantity,
+                    totalPrice: total,
+                    status: 'Confirmed'
+                };
+                saveBooking(bookingData);
+
                 closeModal('booking-modal');
                 showToast('Payment Successful! Check your email.', 'success');
                 addNotification('Booking Confirmed', `You have successfully booked tickets for ${eventTitle} on ${date} at ${time}.`);
